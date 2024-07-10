@@ -1,0 +1,40 @@
+pipeline{
+    agent any
+    }
+    stages{
+        stage("Project-Test"){
+            steps{
+                // to test cmd = mvn test 
+                echo "========executing A========"
+            }
+        }
+        stage("Project-Build"){
+            steps{
+                // to build = mvn package
+                echo "========executing A========"
+            }
+        }
+        stage("Deploy-on-Test"){
+            steps{
+                // deploy on container, use here -> plugin
+                echo "========executing A========"
+            }
+        }
+        stage("Deploy-on-Prod"){
+            steps{
+                // deploy on container, use here -> plugin
+                echo "========executing A========"
+            }
+        }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
