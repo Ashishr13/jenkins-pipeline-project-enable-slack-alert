@@ -1,31 +1,39 @@
-pipeline{
+pipeline {
     agent any
+    tools {
+        maven 'Maven'    // we have specified this name in configure tools for maven installation
     }
     stages{
         stage("Project-Test"){
             steps{
                 // to test cmd = mvn test 
+                sh 'mvn --version'
+                sh 'mvn test'
                 echo "========executing A========"
             }
         }
         stage("Project-Build"){
             steps{
                 // to build = mvn package
+                sh 'mvn package'
                 echo "========executing A========"
             }
         }
         stage("Deploy-on-Test"){
             steps{
                 // deploy on container, use here -> plugin
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetail1', path: '', url: 'http://3.111.51.186:8080')], contextPath: '/app', war: '**/*.war'
                 echo "========executing A========"
             }
         }
         stage("Deploy-on-Prod"){
             steps{
                 // deploy on container, use here -> plugin
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetail1', path: '', url: 'http://3.110.188.18:8080')], contextPath: '/app', war: '**/*.war'
                 echo "========executing A========"
             }
         }
+    }
     post{
         always{
             echo "========always========"
